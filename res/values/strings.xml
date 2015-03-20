@@ -3,6 +3,7 @@
 
     <string name="app_name">android_framework</string>
     <string name="hello_world">Hello world!</string>
+    <string name="btn">关闭广播接收</string>
     <string name="action_settings">Settings</string>
 
 </resources>

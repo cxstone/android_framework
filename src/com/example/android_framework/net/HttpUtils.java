@@ -4,10 +4,13 @@ import java.util.Map;
 
 import android.content.Context;
 
+import com.android.volley.Request;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 
 /**
@@ -18,9 +21,17 @@ import com.android.volley.toolbox.Volley;
  */
 public class HttpUtils {
 	private static final String TAG = HttpUtils.class.getSimpleName();
-	private static RequestQueue mRequestQueue;
 
-	private HttpUtils() {
+	private static HttpUtils mInstance;
+	private static RequestQueue mRequestQueue;
+	private ImageLoader mImageLoader;
+	private static Context mCtx;
+
+	private HttpUtils(Context context) {
+		mCtx = context;
+		mRequestQueue = getRequestQueue();
+		mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(
+				LruBitmapCache.getCacheSize(context)));
 	}
 
 	/**
@@ -29,11 +40,27 @@ public class HttpUtils {
 	 * @param context
 	 * @return
 	 */
-	private synchronized static RequestQueue getRequestQueue(Context context) {
+	public RequestQueue getRequestQueue() {
 		if (mRequestQueue == null) {
-			mRequestQueue = Volley.newRequestQueue(context);
+			mRequestQueue = Volley
+					.newRequestQueue(mCtx.getApplicationContext());
 		}
 		return mRequestQueue;
+	}
+
+	public static synchronized HttpUtils getInstance(Context context) {
+		if (mInstance == null) {
+			mInstance = new HttpUtils(context);
+		}
+		return mInstance;
+	}
+
+	public <T> void addToRequestQueue(Request<T> req) {
+		getRequestQueue().add(req);
+	}
+
+	public ImageLoader getImageLoader() {
+		return mImageLoader;
 	}
 
 	/**
@@ -47,9 +74,8 @@ public class HttpUtils {
 	 * @param listener
 	 * @param errorListener
 	 */
-	public static void post(Context context, Object tag, String url,
-			Map<String, String> param, String body, Listener<String> listener,
-			ErrorListener errorListener) {
+	public void post(Object tag, String url, Map<String, String> param,
+			String body, Listener<String> listener, ErrorListener errorListener) {
 		BaseRequest request = new BaseRequest(Method.POST, url, param, body,
 				listener, errorListener);
 		if (tag != null) {
@@ -57,7 +83,18 @@ public class HttpUtils {
 		} else {
 			request.setTag(TAG);
 		}
-		getRequestQueue(context).add(request);
+		addToRequestQueue(request);
+	}
+
+	/**
+	 * 加载网络图片及显示
+	 * 
+	 * @param context
+	 * @param imageRequest
+	 */
+	public void iamgeLoad(ImageRequest imageRequest) {
+		imageRequest.setShouldCache(true);
+		addToRequestQueue(imageRequest);
 	}
 
 	/**

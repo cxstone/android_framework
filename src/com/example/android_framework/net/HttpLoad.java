@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.example.android_framework.util.Constant;
 
 /**
@@ -33,8 +34,20 @@ public class HttpLoad {
 	 */
 	public static void test(Context context, String tag,
 			Listener<String> listener, ErrorListener errorListener) {
-		HttpUtils.post(context, tag, Constant.API_TEST, null, null, listener,
-				errorListener);
+		HttpUtils.getInstance(context).post(tag, Constant.API_TEST, null, null,
+				listener, errorListener);
+	}
+
+	/**
+	 * 测试图片请求
+	 * 
+	 * @param context
+	 * @param url
+	 * @param listener
+	 */
+	public static void testImage(Context context, String url,
+			ImageListener listener) {
+		HttpUtils.getInstance(context).getImageLoader().get(url, listener);
 	}
 
 }
