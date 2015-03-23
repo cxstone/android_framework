@@ -5,6 +5,12 @@ import android.app.Dialog;
 
 public class DialogUtils {
 
+	/**
+	 * 生成Dialog必须传入Activity或者Service
+	 * 
+	 * @param activity
+	 * @return
+	 */
 	public static Dialog createDialog(Activity activity) {
 		Dialog dialog = null;
 		if (activity != null) {

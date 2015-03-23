@@ -18,4 +18,9 @@ public class Constant {
 	private static final String BASE_URL = "http://www.baidu.com";
 	// API 1
 	public static final String API_TEST = BASE_URL + "";
+
+	/**
+	 * 图片请求API
+	 */
+	public static final String IMG_TEST = "http://e.hiphotos.baidu.com/image/pic/item/cefc1e178a82b901265a6332718da9773912ef38.jpg";
 }

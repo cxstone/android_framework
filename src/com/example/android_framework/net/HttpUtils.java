@@ -10,7 +10,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 
 /**
@@ -29,19 +28,24 @@ public class HttpUtils {
 
 	private HttpUtils(Context context) {
 		mCtx = context;
+		// 创建所有请求的队列
 		mRequestQueue = getRequestQueue();
+		// 初始化图片加载器
 		mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(
 				LruBitmapCache.getCacheSize(context)));
 	}
 
 	/**
-	 * 获取网络请求队列
+	 * 创建网络请求队列
 	 * 
 	 * @param context
 	 * @return
 	 */
 	public RequestQueue getRequestQueue() {
 		if (mRequestQueue == null) {
+			/**
+			 * 取得Application的Context，防止因为Activity的重新加载导致网络请求和图片加载的抖动
+			 */
 			mRequestQueue = Volley
 					.newRequestQueue(mCtx.getApplicationContext());
 		}
@@ -64,7 +68,7 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 发起POST网络请求
+	 * 发起网络数据请求
 	 * 
 	 * @param context
 	 * @param tag
@@ -76,7 +80,7 @@ public class HttpUtils {
 	 */
 	public void post(Object tag, String url, Map<String, String> param,
 			String body, Listener<String> listener, ErrorListener errorListener) {
-		BaseRequest request = new BaseRequest(Method.POST, url, param, body,
+		BaseRequest request = new BaseRequest(Method.GET, url, param, body,
 				listener, errorListener);
 		if (tag != null) {
 			request.setTag(tag);
@@ -84,17 +88,6 @@ public class HttpUtils {
 			request.setTag(TAG);
 		}
 		addToRequestQueue(request);
-	}
-
-	/**
-	 * 加载网络图片及显示
-	 * 
-	 * @param context
-	 * @param imageRequest
-	 */
-	public void iamgeLoad(ImageRequest imageRequest) {
-		imageRequest.setShouldCache(true);
-		addToRequestQueue(imageRequest);
 	}
 
 	/**

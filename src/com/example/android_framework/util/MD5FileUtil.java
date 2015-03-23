@@ -1,4 +1,5 @@
 package com.example.android_framework.util;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -70,16 +71,17 @@ public class MD5FileUtil {
 		return s.equals(md5PwdStr);
 	}
 
-//	public static void main(String[] args) throws IOException {
-//		long begin = System.currentTimeMillis();
-//
-//		File source = new File("D:\\software/android-studio-bundle-135.1740770-windows.exe");
-//		String md51 = getFileMD5String(source);
-//
-//		long end = System.currentTimeMillis();
-//		System.out.println("md5:" + md51);
-//		System.out.println("time:" + ((end - begin) / 1000) + "s");
-//
-//	}
+	// public static void main(String[] args) throws IOException {
+	// long begin = System.currentTimeMillis();
+	//
+	// File source = new
+	// File("D:\\software/android-studio-bundle-135.1740770-windows.exe");
+	// String md51 = getFileMD5String(source);
+	//
+	// long end = System.currentTimeMillis();
+	// System.out.println("md5:" + md51);
+	// System.out.println("time:" + ((end - begin) / 1000) + "s");
+	//
+	// }
 
 }

@@ -14,8 +14,6 @@ public class TestService extends Service {
 	private static final String TAG = TestService.class.getSimpleName();
 	private int NUMBER = 0;
 
-	private static final String PATH = "com.example.android_framework";
-	private Thread task;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {

@@ -33,6 +33,7 @@ public class LruBitmapCache extends LruCache<String, Bitmap> implements
 		return value.getRowBytes() * value.getHeight();
 	}
 
+	// 返回一个缓存值，约为三个屏幕大小的Image的值
 	// Returns a cache size equal to approximately three screens worth of
 	// images.
 	public static int getCacheSize(Context ctx) {

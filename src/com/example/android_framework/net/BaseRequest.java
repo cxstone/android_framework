@@ -17,7 +17,7 @@ import com.example.android_framework.util.Logger;
 import com.google.gson.JsonSyntaxException;
 
 /**
- * 网络请求基类
+ * 数据网络请求基类
  * 
  * @author stone
  * 
@@ -48,6 +48,8 @@ public class BaseRequest extends Request<String> {
 		if (headers != null)
 			mHeader.putAll(headers);
 		setSocketTimeout(SOCKET_TIMEOUT);
+		// 设置HTTP请求是否缓存到本地
+		setShouldCache(true);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.android.volley.toolbox.NetworkImageView;
+import com.example.android_framework.R;
 import com.example.android_framework.util.Constant;
 
 /**
@@ -39,15 +41,29 @@ public class HttpLoad {
 	}
 
 	/**
-	 * 测试图片请求
+	 * 加载图片
 	 * 
 	 * @param context
 	 * @param url
 	 * @param listener
 	 */
-	public static void testImage(Context context, String url,
+	public static void setImageView(Context context, String url,
 			ImageListener listener) {
 		HttpUtils.getInstance(context).getImageLoader().get(url, listener);
+	}
+
+	/**
+	 * 把下载的图片设置到NetworkImageView中
+	 * 
+	 * @param context
+	 * @param view
+	 * @param url
+	 */
+	public static void setNetworkImageView(Context context,
+			NetworkImageView view, String url) {
+		view.setDefaultImageResId(android.R.drawable.btn_dialog);
+		view.setErrorImageResId(R.drawable.abc_ic_search);
+		view.setImageUrl(url, HttpUtils.getInstance(context).getImageLoader());
 	}
 
 }
