@@ -44,11 +44,10 @@ public class HttpUtils {
 	 * @return
 	 */
 	public RequestQueue getRequestQueue() {
-		VolleyLog.DEBUG = Constant.IS_VOLLEY_DEBUG_MODE;
 		if (mRequestQueue == null) {
-			/**
-			 * 取得Application的Context，防止因为Activity的重新加载导致网络请求和图片加载的抖动
-			 */
+			// 设置是否打印日志
+			VolleyLog.DEBUG = Constant.IS_VOLLEY_DEBUG_MODE;
+			// 取得Application的Context，防止因为Activity的重新加载导致网络请求和图片加载的抖动
 			mRequestQueue = Volley
 					.newRequestQueue(mCtx.getApplicationContext());
 		}
