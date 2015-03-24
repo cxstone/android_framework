@@ -13,17 +13,16 @@ import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.example.android_framework.util.Logger;
 import com.google.gson.JsonSyntaxException;
 
 /**
- * 数据网络请求基类
+ * 网络请求基类，仅针对数据请求，图片请求在HttpUtils中
  * 
  * @author stone
  * 
  */
 public class BaseRequest extends Request<String> {
-	private static final String TAG = BaseRequest.class.getSimpleName();
+	// private static final String TAG = BaseRequest.class.getSimpleName();
 	private static final String CONTENT_TYPE = "application/json";
 	private static final String CHARSET = "UTF-8";
 	private static final String PLAT_FORM = "android";
@@ -40,7 +39,7 @@ public class BaseRequest extends Request<String> {
 	public BaseRequest(int method, String url, Map<String, String> headers,
 			String body, Listener<String> mListener, ErrorListener errorListener) {
 		super(method, url, errorListener);
-		Logger.d(TAG, "REQUEST_URL : " + url);
+		// Logger.d(TAG, "REQUEST_URL : " + url);
 		this.mListener = mListener;
 		this.body = body;
 		mHeader.put("Charset", CHARSET);
@@ -49,7 +48,7 @@ public class BaseRequest extends Request<String> {
 			mHeader.putAll(headers);
 		setSocketTimeout(SOCKET_TIMEOUT);
 		// 设置HTTP请求是否缓存到本地
-		setShouldCache(true);
+		setShouldCache(false);
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class BaseRequest extends Request<String> {
 
 	@Override
 	public byte[] getBody() throws AuthFailureError {
-		Logger.d(TAG, "REQUEST_BODY : " + body);
+		// Logger.d(TAG, "REQUEST_BODY : " + body);
 		if (body != null) {
 			return body.getBytes();
 		} else {
@@ -82,7 +81,7 @@ public class BaseRequest extends Request<String> {
 		try {
 			String json = new String(response.data,
 					HttpHeaderParser.parseCharset(response.headers));
-			Logger.d(TAG, "RESPONSE : " + json);
+			// Logger.d(TAG, "RESPONSE : " + json);
 			return Response.success(json,
 					HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {

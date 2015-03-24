@@ -8,9 +8,13 @@ package com.example.android_framework.util;
  */
 public class Constant {
 	/**
-	 * Debug模式开关，默认打开，可以打印日志，发布时设置为false
+	 * 系统日志Debug模式开关，默认打开，可以打印日志，发布时设置为false
 	 */
 	public static final boolean IS_DEBUG_MODE = true;
+	/**
+	 * 网络请求日志Debug模式开关
+	 */
+	public static final boolean IS_VOLLEY_DEBUG_MODE = true;
 
 	/**
 	 * 网络请求API

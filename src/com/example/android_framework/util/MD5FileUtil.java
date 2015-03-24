@@ -2,6 +2,7 @@ package com.example.android_framework.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -28,13 +29,30 @@ public class MD5FileUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getFileMD5String(File file) throws IOException {
-		FileInputStream in = new FileInputStream(file);
-		FileChannel ch = in.getChannel();
-		MappedByteBuffer byteBuffer = ch.map(FileChannel.MapMode.READ_ONLY, 0,
-				file.length());
-		messagedigest.update(byteBuffer);
-		return bufferToHex(messagedigest.digest());
+	public static String getFileMD5String(File file) {
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(file);
+			FileChannel ch = in.getChannel();
+			MappedByteBuffer byteBuffer = ch.map(FileChannel.MapMode.READ_ONLY,
+					0, file.length());
+			messagedigest.update(byteBuffer);
+			return bufferToHex(messagedigest.digest());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public static String getMD5String(String s) {
@@ -70,18 +88,5 @@ public class MD5FileUtil {
 		String s = getMD5String(password);
 		return s.equals(md5PwdStr);
 	}
-
-	// public static void main(String[] args) throws IOException {
-	// long begin = System.currentTimeMillis();
-	//
-	// File source = new
-	// File("D:\\software/android-studio-bundle-135.1740770-windows.exe");
-	// String md51 = getFileMD5String(source);
-	//
-	// long end = System.currentTimeMillis();
-	// System.out.println("md5:" + md51);
-	// System.out.println("time:" + ((end - begin) / 1000) + "s");
-	//
-	// }
 
 }

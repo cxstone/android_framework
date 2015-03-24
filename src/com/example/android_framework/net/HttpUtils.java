@@ -9,8 +9,10 @@ import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.example.android_framework.util.Constant;
 
 /**
  * 网络请求工具类
@@ -42,6 +44,7 @@ public class HttpUtils {
 	 * @return
 	 */
 	public RequestQueue getRequestQueue() {
+		VolleyLog.DEBUG = Constant.IS_VOLLEY_DEBUG_MODE;
 		if (mRequestQueue == null) {
 			/**
 			 * 取得Application的Context，防止因为Activity的重新加载导致网络请求和图片加载的抖动
